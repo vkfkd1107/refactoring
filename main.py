@@ -8,7 +8,6 @@ from plays import plays as plays_data
 
 def statement(invoice, plays):
     totalAmount = 0
-    volumeCredits = 0
     invoice_customer = invoice["customer"]
     result = f"청구 내역 (고객명: {invoice_customer})\n"
 
@@ -43,6 +42,7 @@ def statement(invoice, plays):
         result += f"{play_name}: ${amountFor(perf)/100:.2f} ({perf_audience}석)\n"
         totalAmount += amountFor(perf)
 
+    volumeCredits = 0
     for perf in invoice["performances"]:
         volumeCredits += volumeCreditsFor(perf)
 
