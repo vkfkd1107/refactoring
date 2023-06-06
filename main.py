@@ -12,8 +12,26 @@ def statement(invoice, plays):
     invoice_customer = invoice["customer"]
     result = f"청구 내역 (고객명: {invoice_customer})\n"
 
+    def playFor(aPerformance):
+        return plays[aPerformance["playID"]]
+
+    def amountFor(aPerformance, play):
+        result = 0
+        if play["type"] == "tragedy":
+            result = 40000
+            if aPerformance["audience"] > 30:
+                result += 1000 * (aPerformance["audience"] - 30)
+        elif play["type"] == "comedy":
+            result = 30000
+            if aPerformance["audience"] > 20:
+                result += 1000 + 500 * (aPerformance["audience"] - 20)
+            result += 300 * aPerformance["audience"]
+        else:
+            raise Exception("알수없는 장르")
+        return result
+
     for perf in invoice["performances"]:
-        play = plays[perf["playID"]]
+        play = playFor(perf)
         thisAmount = amountFor(perf, play)
         volumeCredits += max((perf["audience"] - 30), 0)
 
@@ -27,22 +45,6 @@ def statement(invoice, plays):
 
     result += f"총액 ${totalAmount/100:.2f}\n"
     result += f"적립 포인트: ${volumeCredits}점\n"
-    return result
-
-
-def amountFor(aPerformance, play):
-    result = 0
-    if play["type"] == "tragedy":
-        result = 40000
-        if aPerformance["audience"] > 30:
-            result += 1000 * (aPerformance["audience"] - 30)
-    elif play["type"] == "comedy":
-        result = 30000
-        if aPerformance["audience"] > 20:
-            result += 1000 + 500 * (aPerformance["audience"] - 20)
-        result += 300 * aPerformance["audience"]
-    else:
-        raise Exception("알수없는 장르")
     return result
 
 
