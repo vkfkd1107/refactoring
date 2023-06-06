@@ -7,7 +7,6 @@ from plays import plays as plays_data
 
 
 def statement(invoice, plays):
-    totalAmount = 0
     invoice_customer = invoice["customer"]
     result = f"청구 내역 (고객명: {invoice_customer})\n"
 
