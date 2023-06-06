@@ -42,7 +42,7 @@ def statement(invoice, plays):
             result += volumeCreditsFor(perf)
         return result
 
-    def appleSauce():
+    def totalAmount():
         totalAmount = 0
         for perf in invoice["performances"]:
             totalAmount += amountFor(perf)
@@ -52,9 +52,8 @@ def statement(invoice, plays):
         play_name = playFor(perf)["name"]
         perf_audience = perf["audience"]
         result += f"{play_name}: ${amountFor(perf)/100:.2f} ({perf_audience}석)\n"
-    totalAmount = appleSauce()
 
-    result += f"총액 ${totalAmount/100:.2f}\n"
+    result += f"총액 ${totalAmount()/100:.2f}\n"
     result += f"적립 포인트: ${totalVolumeCredits()}점\n"
     return result
 
