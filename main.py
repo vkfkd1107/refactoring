@@ -31,11 +31,11 @@ def statement(invoice, plays):
         return result
 
     def volumeCreditsFor(perf):
-        volumeCredits = 0
-        volumeCredits += max((perf["audience"] - 30), 0)
+        result = 0
+        result += max((perf["audience"] - 30), 0)
         if playFor(perf)["type"] == "comedy":
-            volumeCredits += math.floor(perf["audience"] / 5)
-        return volumeCredits
+            result += math.floor(perf["audience"] / 5)
+        return result
 
     for perf in invoice["performances"]:
         volumeCredits += volumeCreditsFor(perf)
