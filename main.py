@@ -31,14 +31,13 @@ def statement(invoice, plays):
         return result
 
     for perf in invoice["performances"]:
-        play = playFor(perf)
-        thisAmount = amountFor(perf, play)
+        thisAmount = amountFor(perf, playFor(perf))
         volumeCredits += max((perf["audience"] - 30), 0)
 
-        if play["type"] == "comedy":
+        if playFor(perf)["type"] == "comedy":
             volumeCredits += math.floor(perf["audience"] / 5)
 
-        play_name = play["name"]
+        play_name = playFor(perf)["name"]
         perf_audience = perf["audience"]
         result += f"{play_name}: ${thisAmount/100:.2f} ({perf_audience}석)\n"
         totalAmount += thisAmount
