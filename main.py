@@ -37,10 +37,10 @@ def statement(invoice, plays):
         return result
 
     def totalVolumeCredits():
-        volumeCredits = 0
+        result = 0
         for perf in invoice["performances"]:
-            volumeCredits += volumeCreditsFor(perf)
-        return volumeCredits
+            result += volumeCreditsFor(perf)
+        return result
 
     for perf in invoice["performances"]:
         play_name = playFor(perf)["name"]
@@ -48,9 +48,8 @@ def statement(invoice, plays):
         result += f"{play_name}: ${amountFor(perf)/100:.2f} ({perf_audience}석)\n"
         totalAmount += amountFor(perf)
 
-    volumeCredits = totalVolumeCredits()
     result += f"총액 ${totalAmount/100:.2f}\n"
-    result += f"적립 포인트: ${volumeCredits}점\n"
+    result += f"적립 포인트: ${totalVolumeCredits()}점\n"
     return result
 
 
