@@ -31,7 +31,6 @@ def statement(invoice, plays):
         return result
 
     for perf in invoice["performances"]:
-        thisAmount = amountFor(perf)
         volumeCredits += max((perf["audience"] - 30), 0)
 
         if playFor(perf)["type"] == "comedy":
@@ -39,8 +38,8 @@ def statement(invoice, plays):
 
         play_name = playFor(perf)["name"]
         perf_audience = perf["audience"]
-        result += f"{play_name}: ${thisAmount/100:.2f} ({perf_audience}석)\n"
-        totalAmount += thisAmount
+        result += f"{play_name}: ${amountFor(perf)/100:.2f} ({perf_audience}석)\n"
+        totalAmount += amountFor(perf)
 
     result += f"총액 ${totalAmount/100:.2f}\n"
     result += f"적립 포인트: ${volumeCredits}점\n"
