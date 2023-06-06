@@ -15,7 +15,7 @@ def statement(invoice, plays):
     def playFor(aPerformance):
         return plays[aPerformance["playID"]]
 
-    def amountFor(aPerformance, play):
+    def amountFor(aPerformance):
         result = 0
         if playFor(perf)["type"] == "tragedy":
             result = 40000
@@ -31,7 +31,7 @@ def statement(invoice, plays):
         return result
 
     for perf in invoice["performances"]:
-        thisAmount = amountFor(perf, playFor(perf))
+        thisAmount = amountFor(perf)
         volumeCredits += max((perf["audience"] - 30), 0)
 
         if playFor(perf)["type"] == "comedy":
