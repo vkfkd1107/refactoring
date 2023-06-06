@@ -36,16 +36,19 @@ def statement(invoice, plays):
             result += math.floor(perf["audience"] / 5)
         return result
 
+    def totalVolumeCredits():
+        volumeCredits = 0
+        for perf in invoice["performances"]:
+            volumeCredits += volumeCreditsFor(perf)
+        return volumeCredits
+
     for perf in invoice["performances"]:
         play_name = playFor(perf)["name"]
         perf_audience = perf["audience"]
         result += f"{play_name}: ${amountFor(perf)/100:.2f} ({perf_audience}석)\n"
         totalAmount += amountFor(perf)
 
-    volumeCredits = 0
-    for perf in invoice["performances"]:
-        volumeCredits += volumeCreditsFor(perf)
-
+    volumeCredits = totalVolumeCredits()
     result += f"총액 ${totalAmount/100:.2f}\n"
     result += f"적립 포인트: ${volumeCredits}점\n"
     return result
