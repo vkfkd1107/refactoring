@@ -14,20 +14,7 @@ def statement(invoice, plays):
 
     for perf in invoice["performances"]:
         play = plays[perf["playID"]]
-        thisAmount = 0
-
-        if play["type"] == "tragedy":
-            thisAmount = 40000
-            if perf["audience"] > 30:
-                thisAmount += 1000 * (perf["audience"] - 30)
-        elif play["type"] == "comedy":
-            thisAmount = 30000
-            if perf["audience"] > 20:
-                thisAmount += 1000 + 500 * (perf["audience"] - 20)
-            thisAmount += 300 * perf["audience"]
-        else:
-            raise Exception("알수없는 장르")
-
+        thisAmount = amountFor(perf, play)
         volumeCredits += max((perf["audience"] - 30), 0)
 
         if play["type"] == "comedy":
@@ -41,6 +28,22 @@ def statement(invoice, plays):
     result += f"총액 ${totalAmount/100:.2f}\n"
     result += f"적립 포인트: ${volumeCredits}점\n"
     return result
+
+
+def amountFor(perf, play):
+    thisAmount = 0
+    if play["type"] == "tragedy":
+        thisAmount = 40000
+        if perf["audience"] > 30:
+            thisAmount += 1000 * (perf["audience"] - 30)
+    elif play["type"] == "comedy":
+        thisAmount = 30000
+        if perf["audience"] > 20:
+            thisAmount += 1000 + 500 * (perf["audience"] - 20)
+        thisAmount += 300 * perf["audience"]
+    else:
+        raise Exception("알수없는 장르")
+    return thisAmount
 
 
 print(statement(invoices_data, plays_data))
