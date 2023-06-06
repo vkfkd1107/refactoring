@@ -17,11 +17,11 @@ def statement(invoice, plays):
 
     def amountFor(aPerformance, play):
         result = 0
-        if play["type"] == "tragedy":
+        if playFor(perf)["type"] == "tragedy":
             result = 40000
             if aPerformance["audience"] > 30:
                 result += 1000 * (aPerformance["audience"] - 30)
-        elif play["type"] == "comedy":
+        elif playFor(perf)["type"] == "comedy":
             result = 30000
             if aPerformance["audience"] > 20:
                 result += 1000 + 500 * (aPerformance["audience"] - 20)
