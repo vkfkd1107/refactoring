@@ -30,11 +30,15 @@ def statement(invoice, plays):
             raise Exception("알수없는 장르")
         return result
 
-    for perf in invoice["performances"]:
+    def volumeCreditsFor(perf):
+        volumeCredits = 0
         volumeCredits += max((perf["audience"] - 30), 0)
-
         if playFor(perf)["type"] == "comedy":
             volumeCredits += math.floor(perf["audience"] / 5)
+        return volumeCredits
+
+    for perf in invoice["performances"]:
+        volumeCredits += volumeCreditsFor(perf)
 
         play_name = playFor(perf)["name"]
         perf_audience = perf["audience"]
