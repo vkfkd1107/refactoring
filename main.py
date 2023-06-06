@@ -31,19 +31,19 @@ def statement(invoice, plays):
 
 
 def amountFor(perf, play):
-    thisAmount = 0
+    result = 0
     if play["type"] == "tragedy":
-        thisAmount = 40000
+        result = 40000
         if perf["audience"] > 30:
-            thisAmount += 1000 * (perf["audience"] - 30)
+            result += 1000 * (perf["audience"] - 30)
     elif play["type"] == "comedy":
-        thisAmount = 30000
+        result = 30000
         if perf["audience"] > 20:
-            thisAmount += 1000 + 500 * (perf["audience"] - 20)
-        thisAmount += 300 * perf["audience"]
+            result += 1000 + 500 * (perf["audience"] - 20)
+        result += 300 * perf["audience"]
     else:
         raise Exception("알수없는 장르")
-    return thisAmount
+    return result
 
 
 print(statement(invoices_data, plays_data))
